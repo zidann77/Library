@@ -43,14 +43,16 @@ namespace Library.People.Controls
             lbCountry.Text = P.CountryInfo.Name;
 
 
-            if (P.ImageURL != "")
-                guna2CirclePictureBox1.ImageLocation = P.ImageURL;
-
-
             if (P.IsMale)
                 guna2CirclePictureBox1.Image = Resources.man;
             else
                 guna2CirclePictureBox1.Image = Resources.woman;
+
+
+            if (P.ImageURL != "")
+                guna2CirclePictureBox1.ImageLocation = P.ImageURL;
+
+
 
         }
 

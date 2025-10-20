@@ -57,7 +57,7 @@
             // 
             this.lbID.AutoSize = true;
             this.lbID.Font = new System.Drawing.Font("Rockwell", 22F);
-            this.lbID.Location = new System.Drawing.Point(235, 210);
+            this.lbID.Location = new System.Drawing.Point(248, 210);
             this.lbID.Name = "lbID";
             this.lbID.Size = new System.Drawing.Size(63, 35);
             this.lbID.TabIndex = 2;
@@ -138,7 +138,7 @@
             this.guna2CirclePictureBox1.Location = new System.Drawing.Point(163, 3);
             this.guna2CirclePictureBox1.Name = "guna2CirclePictureBox1";
             this.guna2CirclePictureBox1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CirclePictureBox1.Size = new System.Drawing.Size(193, 193);
+            this.guna2CirclePictureBox1.Size = new System.Drawing.Size(216, 204);
             this.guna2CirclePictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.guna2CirclePictureBox1.TabIndex = 0;
             this.guna2CirclePictureBox1.TabStop = false;

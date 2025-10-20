@@ -104,13 +104,21 @@ namespace Library.People
 
         private void guna2TextBox1_TextChanged(object sender, EventArgs e)
         {
-
+            if (guna2TextBox1.Text == "")
+            {
+                dt.DefaultView.RowFilter = null;
+            }
             if (CurrentFilter == "PersonID")
             {
-                if (int.TryParse(guna2TextBox1.Text, out int Value))
+                //if (int.TryParse(guna2TextBox1.Text, out int Value))
+                //{
+                //    dt.DefaultView.RowFilter = $"[{CurrentFilter}] = {Value}";
+                //}
+                if (int.TryParse(guna2TextBox1.Text, out int value))
                 {
-                    dt.DefaultView.RowFilter = $"[{CurrentFilter}] = {Value}";
+                    dt.DefaultView.RowFilter = $"CONVERT([{CurrentFilter}], 'System.String') LIKE '{value}%'";
                 }
+
             }
             else
             {
@@ -164,6 +172,15 @@ namespace Library.People
             frmPersonInfo frm = new frmPersonInfo(ID);
             frm.ShowDialog();
 
+        }
+
+        private void editPersonInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int ID = (int)guna2DataGridView1.CurrentRow.Cells[0].Value;
+            frmAddUpdatePerson frm = new frmAddUpdatePerson(ID);
+            frm.ShowDialog();
+
+            Reloaddata();
         }
     }
 }
