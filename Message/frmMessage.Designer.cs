@@ -70,7 +70,7 @@
             this.lbtitle.AutoSize = true;
             this.lbtitle.Font = new System.Drawing.Font("Rockwell", 20F);
             this.lbtitle.ForeColor = System.Drawing.Color.Linen;
-            this.lbtitle.Location = new System.Drawing.Point(155, 12);
+            this.lbtitle.Location = new System.Drawing.Point(161, 12);
             this.lbtitle.Name = "lbtitle";
             this.lbtitle.Size = new System.Drawing.Size(123, 31);
             this.lbtitle.TabIndex = 10;
