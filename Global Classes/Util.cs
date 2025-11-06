@@ -84,21 +84,7 @@ namespace Library.Global_Classes
             return true;
         }
 
-        public static bool ReadLoginDataFromRegistry(ref string username, ref string password)
-        {
-            return true;
-        }
-        public static bool UpdateLoginDataFromRegistry(string username, string password)
-        {
-            return true;
-        }
-
-        public static bool DeleteLoginDataFromRegistry(string username, string password)
-        {
-            return true;
-        }
-
-
+     
 
     }
 }

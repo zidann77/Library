@@ -17,7 +17,7 @@ namespace Library.Global_Classes
     /// AUTHOR: [Your Name]
     /// VERSION: 1.0
     /// </summary>
-    public class clsLogger
+    public static class clsLogger
     {
         /// <summary>
         /// CONST: sourceName (Event Log Source Identifier)
@@ -28,23 +28,7 @@ namespace Library.Global_Classes
         /// </summary>
         const string sourceName = "LibrarySystem";
 
-        /// <summary>
-        /// CONSTRUCTOR: clsLogger
-        /// PURPOSE: One-time initialization for event log source verification
-        /// SECURITY: Requires elevated privileges for source creation
-        /// PERFORMANCE: Runs once per application instance
-        /// ALTERNATIVE: Consider static constructor for single execution
-        /// </summary>
-        public clsLogger()
-        {
-            // Create the event source if it does not exist
-            if (!EventLog.SourceExists(sourceName))
-            {
-                EventLog.CreateEventSource(sourceName, "Application");
-          
-            }
-        }
-
+      
         /// <summary>
         /// METHOD: LogMessage (Primary Logging Workhorse)
         /// PURPOSE: Unified method for all event types with stack trace context
@@ -59,6 +43,13 @@ namespace Library.Global_Classes
         /// <param name="Type">Type of event (Error, Warning, Information)</param>
         public static void LogMessage(string message, EventLogEntryType Type)
         {
+            // Create the event source if it does not exist
+            if (!EventLog.SourceExists(sourceName))
+            {
+                EventLog.CreateEventSource(sourceName, "Application");
+
+            }
+
             try
             {
                 // STACK TRACE ANALYSIS: Captures calling method context for debugging
