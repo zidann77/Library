@@ -29,7 +29,6 @@ namespace Library.People
 
         void setupDataGridView()
         {
-            
             //   guna2DataGridView1.EnableHeadersVisualStyles = false;
             guna2DataGridView1.DataSource = dt;
 
@@ -81,8 +80,28 @@ namespace Library.People
             guna2DataGridView1.ColumnHeadersHeight = 35;
             guna2DataGridView1.RowTemplate.Height = 30;
             guna2DataGridView1.BackgroundColor = Color.White;
+        }
 
-
+        void UpdateSearchPlaceholder()
+        {
+            switch (CurrentFilter)
+            {
+                case "PersonID":
+                    guna2TextBox1.PlaceholderText = "Search by Person ID...";
+                    break;
+                case "Full Name":
+                    guna2TextBox1.PlaceholderText = "Search by Full Name...";
+                    break;
+                case "Phone":
+                    guna2TextBox1.PlaceholderText = "Search by Phone...";
+                    break;
+                case "Email":
+                    guna2TextBox1.PlaceholderText = "Search by Email...";
+                    break;
+                default:
+                    guna2TextBox1.PlaceholderText = "Search...";
+                    break;
+            }
         }
 
         private void frmListPeople_Load(object sender, EventArgs e)
@@ -90,16 +109,22 @@ namespace Library.People
             Reloaddata();
             setupDataGridView();
             guna2ComboBox1.SelectedIndex = 0;
+            UpdateSearchPlaceholder(); // تحديث placeholder عند التحميل الأولي
         }
 
         private void guna2ImageButton1_Click(object sender, EventArgs e)
         {
-            this.Close();   
+            this.Close();
         }
 
         private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             CurrentFilter = guna2ComboBox1.Text.ToString();
+            UpdateSearchPlaceholder(); // تحديث placeholder عند تغيير الفلتر
+
+            // إعادة تعيين البحث عند تغيير الفلتر
+            guna2TextBox1.Text = "";
+            dt.DefaultView.RowFilter = null;
         }
 
         private void guna2TextBox1_TextChanged(object sender, EventArgs e)
@@ -107,18 +132,20 @@ namespace Library.People
             if (guna2TextBox1.Text == "")
             {
                 dt.DefaultView.RowFilter = null;
+                return;
             }
+
             if (CurrentFilter == "PersonID")
             {
-                //if (int.TryParse(guna2TextBox1.Text, out int Value))
-                //{
-                //    dt.DefaultView.RowFilter = $"[{CurrentFilter}] = {Value}";
-                //}
                 if (int.TryParse(guna2TextBox1.Text, out int value))
                 {
                     dt.DefaultView.RowFilter = $"CONVERT([{CurrentFilter}], 'System.String') LIKE '{value}%'";
                 }
-
+                else
+                {
+                    // إذا لم يكن الإدخال رقماً، لا تطبق أي فلتر
+                    dt.DefaultView.RowFilter = null;
+                }
             }
             else
             {
@@ -138,26 +165,20 @@ namespace Library.People
                 e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
             }
         }
+
         private void _DisableFormWhileRefresh()
         {
             this.Enabled = false;
-
             Application.DoEvents(); // Allow UI to update
-
             Cursor.Current = Cursors.WaitCursor;
-
         }
 
         private void _EnableFormAfterRefresh()
         {
             this.Enabled = true;
-
             Application.DoEvents(); // Allow UI to update
-
             Cursor.Current = Cursors.Default;
         }
-
-
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -171,7 +192,6 @@ namespace Library.People
             int ID = (int)guna2DataGridView1.CurrentRow.Cells[0].Value;
             frmPersonInfo frm = new frmPersonInfo(ID);
             frm.ShowDialog();
-
         }
 
         private void editPersonInfoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -179,8 +199,38 @@ namespace Library.People
             int ID = (int)guna2DataGridView1.CurrentRow.Cells[0].Value;
             frmAddUpdatePerson frm = new frmAddUpdatePerson(ID);
             frm.ShowDialog();
-
             Reloaddata();
+        }
+
+        private void btnAddnewBook_Click(object sender, EventArgs e)
+        {
+            frmAddUpdatePerson frm = new frmAddUpdatePerson();
+            frm.ShowDialog();
+        }
+
+        // طرق مساعدة للبحث المباشر
+        public void SearchByPersonID(int personID)
+        {
+            guna2ComboBox1.SelectedItem = "PersonID";
+            guna2TextBox1.Text = personID.ToString();
+        }
+
+        public void SearchByName(string name)
+        {
+            guna2ComboBox1.SelectedItem = "Full Name";
+            guna2TextBox1.Text = name;
+        }
+
+        public void SearchByPhone(string phone)
+        {
+            guna2ComboBox1.SelectedItem = "Phone";
+            guna2TextBox1.Text = phone;
+        }
+
+        public void SearchByEmail(string email)
+        {
+            guna2ComboBox1.SelectedItem = "Email";
+            guna2TextBox1.Text = email;
         }
     }
 }
